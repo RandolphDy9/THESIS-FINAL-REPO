@@ -1628,12 +1628,35 @@ void MainWindow::receiveFrame(ProcessedFrame *outputFrames)
         else
             ui->viewJunc1->setPixmap(QPixmap::fromImage(outputFrames->original[0]));
 
+
+
          if(flagInfoToggle == true)
          {
 
-             ui->countFW->display(outputFrames->numberOfFW[0]);
-             ui->countMT->display(outputFrames->numberOfMT[0]);
-             ui->countTR->display(outputFrames->numberOfTR[0]);
+            if (classifierSelect == 0) {    // CHANGES HERE!
+
+                outputFrames->numberOfFW[0] = 0;
+                outputFrames->numberOfMT[0] = 0;
+                outputFrames->numberOfTR[0] = 0;
+
+            } else {
+
+                if (ui->classifierFW->isChecked() == false) {
+                    outputFrames->numberOfFW[0] = 0;
+                }
+                if (ui->classifierMT->isChecked() == false) {
+                    outputFrames->numberOfMT[0] = 0;
+                }
+                if (ui->classifierTR->isChecked() == false) {
+                    outputFrames->numberOfTR[0] = 0;
+                }
+
+                ui->countFW->display(outputFrames->numberOfFW[0]);
+                ui->countMT->display(outputFrames->numberOfMT[0]);
+                ui->countTR->display(outputFrames->numberOfTR[0]);
+            }
+
+
          }
          if(ifBox == 1){
              if(t_seconds == 5){
@@ -1684,9 +1707,29 @@ void MainWindow::receiveFrame(ProcessedFrame *outputFrames)
         if(flagInfoToggle == true)
         {
 
-            ui->countFW_2->display(outputFrames->numberOfFW[1]);
-            ui->countMT_2->display(outputFrames->numberOfMT[1]);
-            ui->countTR_2->display(outputFrames->numberOfTR[1]);
+            if (classifierSelect == 0) {    // CHANGES HERE!
+
+                outputFrames->numberOfFW[1] = 0;
+                outputFrames->numberOfMT[1] = 0;
+                outputFrames->numberOfTR[1] = 0;
+
+            } else {
+
+                if (ui->classifierFW->isChecked() == false) {
+                    outputFrames->numberOfFW[1] = 0;
+                }
+                if (ui->classifierMT->isChecked() == false) {
+                    outputFrames->numberOfMT[1] = 0;
+                }
+                if (ui->classifierTR->isChecked() == false) {
+                    outputFrames->numberOfTR[1] = 0;
+                }
+
+                ui->countFW_2->display(outputFrames->numberOfFW[1]);
+                ui->countMT_2->display(outputFrames->numberOfMT[1]);
+                ui->countTR_2->display(outputFrames->numberOfTR[1]);
+            }
+
         }
         if(ifBox == 1){
             if(t_seconds == 5){
@@ -1732,9 +1775,29 @@ void MainWindow::receiveFrame(ProcessedFrame *outputFrames)
         if(flagInfoToggle == true)
         {
 
-            ui->countFW_3->display(outputFrames->numberOfFW[2]);
-            ui->countMT_3->display(outputFrames->numberOfMT[2]);
-            ui->countTR_3->display(outputFrames->numberOfTR[2]);
+            if (classifierSelect == 0) {    // CHANGES HERE!
+
+                outputFrames->numberOfFW[2] = 0;
+                outputFrames->numberOfMT[2] = 0;
+                outputFrames->numberOfTR[2] = 0;
+
+            } else {
+
+                if (ui->classifierFW->isChecked() == false) {
+                    outputFrames->numberOfFW[2] = 0;
+                }
+                if (ui->classifierMT->isChecked() == false) {
+                    outputFrames->numberOfMT[2] = 0;
+                }
+                if (ui->classifierTR->isChecked() == false) {
+                    outputFrames->numberOfTR[2] = 0;
+                }
+
+                ui->countFW_3->display(outputFrames->numberOfFW[2]);
+                ui->countMT_3->display(outputFrames->numberOfMT[2]);
+                ui->countTR_3->display(outputFrames->numberOfTR[2]);
+            }
+
         }
         if(ifBox == 1){
             if(t_seconds == 5){
@@ -1779,9 +1842,29 @@ void MainWindow::receiveFrame(ProcessedFrame *outputFrames)
         if(flagInfoToggle == true)
         {
 
-            ui->countFW_4->display(outputFrames->numberOfFW[3]);
-            ui->countMT_4->display(outputFrames->numberOfMT[3]);
-            ui->countTR_4->display(outputFrames->numberOfTR[3]);
+            if (classifierSelect == 0) {    // CHANGES HERE!
+
+                outputFrames->numberOfFW[3] = 0;
+                outputFrames->numberOfMT[3] = 0;
+                outputFrames->numberOfTR[3] = 0;
+
+            } else {
+
+                if (ui->classifierFW->isChecked() == false) {
+                    outputFrames->numberOfFW[3] = 0;
+                }
+                if (ui->classifierMT->isChecked() == false) {
+                    outputFrames->numberOfMT[3] = 0;
+                }
+                if (ui->classifierTR->isChecked() == false) {
+                    outputFrames->numberOfTR[3] = 0;
+                }
+
+                ui->countFW_4->display(outputFrames->numberOfFW[3]);
+                ui->countMT_4->display(outputFrames->numberOfMT[3]);
+                ui->countTR_4->display(outputFrames->numberOfTR[3]);
+            }
+
         }
         if(ifBox == 1){
             if(t_seconds == 5){
@@ -2074,15 +2157,22 @@ void MainWindow::on_selectInt_2_clicked()
 //    emit sendSetupCFG(cfg);
 //    ui->classifier->close();
 
-    if ((ui->classifierFW->isChecked() || ui->classifierTR->isChecked() || ui->classifierMT->isChecked())) {
-        classifierSelect = 1;
-        on_actionPause_triggered();
-        QMessageBox::information(this, "Play!", "Press play button.");
-    } else {
-        classifierSelect = 0;
-        on_actionStop_triggered();
-        QMessageBox::information(this, "Play!", "Press play button.");
-    }
+        // CHANGES HERE!
+      if (ui->classifierFW->isChecked() || ui->classifierMT->isChecked() || ui->classifierTR->isChecked()) {
+          classifierSelect = 1;
+          on_actionPause_triggered();
+          QMessageBox::information(this, "Play!", "Press play button.");
+
+      } else {
+          classifierSelect = 0;
+
+          ui->countFW->display(0); ui->countFW_2->display(0); ui->countFW_3->display(0); ui->countFW_4->display(0);
+          ui->countMT->display(0); ui->countMT_2->display(0); ui->countMT_3->display(0); ui->countMT_4->display(0);
+          ui->countTR->display(0); ui->countTR_2->display(0); ui->countTR_3->display(0); ui->countTR_4->display(0);
+
+          on_actionStop_triggered();
+          QMessageBox::information(this, "No Classifier has been Selected!", "Press Play button.");
+      }
 
 }
 
@@ -2266,182 +2356,199 @@ void MainWindow::receiveDensityUpdateRequest()
     //    if (checkStat == 1) {
             if(ifBox == 1){
 
+                if (classifierSelect == 0) {    // CHANGES HERE!
+                    ui->listWidget->item(0)->setText("V1 - SNR (Cebu): ");
+                    ui->listWidget->item(1)->setText("V2 - SNR (Terminal): ");
+                    ui->listWidget->item(2)->setText("V3 - SNR (CDU): ");
+                    ui->listWidget->item(3)->setText("V4 - SNR (Parkmall): ");
+                } else {
+                    if(total_area_l1 <= v1_area * LOW_PERCENT){
+                        sprintf(buff,"V1 - SNR (Cebu): LOW (%.0f%)",(float)((float)total_area_l1/v1_area)*100);
+                        ui->listWidget->item(0)->setText(QString(buff));
 
-                if(total_area_l1 <= v1_area * LOW_PERCENT){
-                    sprintf(buff,"V1 - SNR (Cebu): LOW (%.0f%)",(float)((float)total_area_l1/v1_area)*100);
-                    ui->listWidget->item(0)->setText(QString(buff));
+                        //ui->est_go1->display(19);
+                        cebu_low = 1;
+                        cebu_mod = 0;
+                        cebu_high = 0;
+                    }else if(total_area_l1 > v1_area * LOW_PERCENT && total_area_l1 <= v1_area * MOD_PERCENT){
+                        sprintf(buff,"V1 - SNR (Cebu): MOD (%.0f%)",(float)((float)total_area_l1/v1_area)*100);
+                        ui->listWidget->item(0)->setText(QString(buff));
 
-                    //ui->est_go1->display(19);
-                    cebu_low = 1;
-                    cebu_mod = 0;
-                    cebu_high = 0;
-                }else if(total_area_l1 > v1_area * LOW_PERCENT && total_area_l1 <= v1_area * MOD_PERCENT){
-                    sprintf(buff,"V1 - SNR (Cebu): MOD (%.0f%)",(float)((float)total_area_l1/v1_area)*100);
-                    ui->listWidget->item(0)->setText(QString(buff));
+                        //ui->est_go1->display(27);
+                        cebu_low = 0;
+                        cebu_high = 0;
+                        cebu_mod = 1;
+                    }else if(total_area_l1 > v1_area * MOD_PERCENT){
+                        sprintf(buff,"V1 - SNR (Cebu): HIGH (%.0f%)",(float)((float)total_area_l1/v1_area)*100);
+                        ui->listWidget->item(0)->setText(QString(buff));
 
-                    //ui->est_go1->display(27);
-                    cebu_low = 0;
-                    cebu_high = 0;
-                    cebu_mod = 1;
-                }else if(total_area_l1 > v1_area * MOD_PERCENT){
-                    sprintf(buff,"V1 - SNR (Cebu): HIGH (%.0f%)",(float)((float)total_area_l1/v1_area)*100);
-                    ui->listWidget->item(0)->setText(QString(buff));
+                        //ui->est_go1->display(51);
+                        cebu_high = 1;
+                        cebu_low = 0;
+                        cebu_mod = 0;
+                    }
 
-                    //ui->est_go1->display(51);
-                    cebu_high = 1;
-                    cebu_low = 0;
-                    cebu_mod = 0;
+                    if(total_area_l2 < v2_area * LOW_PERCENT){
+                        sprintf(buff,"V2 - SNR (Terminal): LOW (%.2f%)",(float)((float)total_area_l2/v2_area)*100);
+                        ui->listWidget->item(1)->setText(QString(buff));
+                        //ui->est_go2->display(19);
+
+                        bus_low = 1;
+                        bus_mod = 0;
+                        bus_high = 0;
+                    }else if(total_area_l2 > v2_area * LOW_PERCENT && total_area_l2 < v2_area * MOD_PERCENT){
+                         sprintf(buff,"V2 - SNR (Terminal): MOD (%.2f%)",(float)((float)total_area_l2/v2_area)*100);
+                        ui->listWidget->item(1)->setText(QString(buff));
+                        //ui->est_go2->display(27);
+
+                        bus_low = 0;
+                        bus_mod = 1;
+                        bus_high = 0;
+                    }else if(total_area_l2  > v2_area * MOD_PERCENT){
+                         sprintf(buff,"V2 - SNR (Terminal): HIGH (%.2f%)",(float)((float)total_area_l2/v2_area)*100);
+                        ui->listWidget->item(1)->setText(QString(buff));
+                        //ui->est_go2->display(51);
+                        bus_low = 0;
+                        bus_mod = 0;
+                        bus_high = 1;
+                    }
+
+                    if((total_area_l3 ) < v3_area * LOW_PERCENT){
+                        sprintf(buff,"V3 - SNR (CDU): LOW (%.2f%)",(float)((float)total_area_l3/v3_area)*100 );
+                        ui->listWidget->item(2)->setText(QString(buff));
+
+                        //ui->est_go3->display(19);
+                        cdu_mod = 0;
+                        cdu_high = 0;
+                        cdu_low = 1;
+                    }else if((total_area_l3 ) > v3_area * LOW_PERCENT && total_area_l3 < v3_area * MOD_PERCENT){
+                        sprintf(buff,"V3 - SNR (CDU): MOD (%.2f%)",(float)((float)total_area_l3/v3_area)*100 );
+                        ui->listWidget->item(2)->setText(QString(buff));
+
+                        //ui->est_go3->display(27);
+                        cdu_low = 0;
+                        cdu_mod = 1;
+                        cdu_high = 0;
+                    }else if((total_area_l3 ) > v3_area * MOD_PERCENT){
+                        sprintf(buff,"V3 - SNR (CDU): HIGH (%.2f%)",(float)((float)total_area_l3/v3_area)*100 );
+                        ui->listWidget->item(2)->setText(QString(buff));
+
+                        //ui->est_go3->display(51);
+                        cdu_high = 1;
+                        cdu_mod = 0;
+                        cdu_low = 0;
+                    }
+
+                    if((total_area_l4 ) < v4_area * LOW_PERCENT){
+                        sprintf(buff,"V4 - SNR (Parkmall): LOW (%.2f%)",(float)((float)total_area_l4/v4_area)*100 );
+                        ui->listWidget->item(3)->setText(QString(buff));
+
+                        //ui->est_go4->display(19);
+                        pmall_low = 1;
+                        pmall_mod = 0;
+                        pmall_high = 0;
+                    }else if((total_area_l4 ) > v4_area * LOW_PERCENT && total_area_l4 < v4_area * MOD_PERCENT){
+                        sprintf(buff,"V4 - SNR (Parkmall): MOD (%.2f%)",(float)((float)total_area_l4/v4_area)*100 );
+                        ui->listWidget->item(3)->setText(QString(buff));
+
+                        //ui->est_go4->display(27);
+                        pmall_mod = 1;
+                        pmall_high = 0;
+                        pmall_low = 0;
+                    }else if((total_area_l4 ) > v4_area * MOD_PERCENT){
+                        sprintf(buff,"V4 - SNR (Parkmall): HIGH (%.2f%)",(float)((float)total_area_l4/v4_area)*100 );
+                        ui->listWidget->item(3)->setText(QString(buff));
+
+                        //ui->est_go4->display(51);
+                        pmall_high = 1;
+                        pmall_low = 0;
+                        pmall_mod = 0;
+                    }
                 }
 
-                if(total_area_l2 < v2_area * LOW_PERCENT){
-                    sprintf(buff,"V2 - SNR (Terminal): LOW (%.2f%)",(float)((float)total_area_l2/v2_area)*100);
-                    ui->listWidget->item(1)->setText(QString(buff));
-                    //ui->est_go2->display(19);
 
-                    bus_low = 1;
-                    bus_mod = 0;
-                    bus_high = 0;
-                }else if(total_area_l2 > v2_area * LOW_PERCENT && total_area_l2 < v2_area * MOD_PERCENT){
-                     sprintf(buff,"V2 - SNR (Terminal): MOD (%.2f%)",(float)((float)total_area_l2/v2_area)*100);
-                    ui->listWidget->item(1)->setText(QString(buff));
-                    //ui->est_go2->display(27);
 
-                    bus_low = 0;
-                    bus_mod = 1;
-                    bus_high = 0;
-                }else if(total_area_l2  > v2_area * MOD_PERCENT){
-                     sprintf(buff,"V2 - SNR (Terminal): HIGH (%.2f%)",(float)((float)total_area_l2/v2_area)*100);
-                    ui->listWidget->item(1)->setText(QString(buff));
-                    //ui->est_go2->display(51);
-                    bus_low = 0;
-                    bus_mod = 0;
-                    bus_high = 1;
-                }
-
-                if((total_area_l3 ) < v3_area * LOW_PERCENT){
-                    sprintf(buff,"V3 - SNR (CDU): LOW (%.2f%)",(float)((float)total_area_l3/v3_area)*100 );
-                    ui->listWidget->item(2)->setText(QString(buff));
-
-                    //ui->est_go3->display(19);
-                    cdu_mod = 0;
-                    cdu_high = 0;
-                    cdu_low = 1;
-                }else if((total_area_l3 ) > v3_area * LOW_PERCENT && total_area_l3 < v3_area * MOD_PERCENT){
-                    sprintf(buff,"V3 - SNR (CDU): MOD (%.2f%)",(float)((float)total_area_l3/v3_area)*100 );
-                    ui->listWidget->item(2)->setText(QString(buff));
-
-                    //ui->est_go3->display(27);
-                    cdu_low = 0;
-                    cdu_mod = 1;
-                    cdu_high = 0;
-                }else if((total_area_l3 ) > v3_area * MOD_PERCENT){
-                    sprintf(buff,"V3 - SNR (CDU): HIGH (%.2f%)",(float)((float)total_area_l3/v3_area)*100 );
-                    ui->listWidget->item(2)->setText(QString(buff));
-
-                    //ui->est_go3->display(51);
-                    cdu_high = 1;
-                    cdu_mod = 0;
-                    cdu_low = 0;
-                }
-
-                if((total_area_l4 ) < v4_area * LOW_PERCENT){
-                    sprintf(buff,"V4 - SNR (Parkmall): LOW (%.2f%)",(float)((float)total_area_l4/v4_area)*100 );
-                    ui->listWidget->item(3)->setText(QString(buff));
-
-                    //ui->est_go4->display(19);
-                    pmall_low = 1;
-                    pmall_mod = 0;
-                    pmall_high = 0;
-                }else if((total_area_l4 ) > v4_area * LOW_PERCENT && total_area_l4 < v4_area * MOD_PERCENT){
-                    sprintf(buff,"V4 - SNR (Parkmall): MOD (%.2f%)",(float)((float)total_area_l4/v4_area)*100 );
-                    ui->listWidget->item(3)->setText(QString(buff));
-
-                    //ui->est_go4->display(27);
-                    pmall_mod = 1;
-                    pmall_high = 0;
-                    pmall_low = 0;
-                }else if((total_area_l4 ) > v4_area * MOD_PERCENT){
-                    sprintf(buff,"V4 - SNR (Parkmall): HIGH (%.2f%)",(float)((float)total_area_l4/v4_area)*100 );
-                    ui->listWidget->item(3)->setText(QString(buff));
-
-                    //ui->est_go4->display(51);
-                    pmall_high = 1;
-                    pmall_low = 0;
-                    pmall_mod = 0;
-                }
 
             } else {
 
-                if((total_area_l3 )  < v3_areat * LOW_PERCENT){
-                    sprintf(buff,"V2 PACIFIC (MCB): LOW (%.2f%)",(float)((float)total_area_l3/v3_areat)*100 );
-                    ui->listWidget->item(2)->setText(QString(buff));
+                if (classifierSelect == 0) {    // CHANGES HERE!
+                    ui->listWidget->item(2)->setText("V3 PACIFIC (MCB): ");
+                    ui->listWidget->item(1)->setText("V2 PACIFIC (JPR): ");
+                    ui->listWidget->item(0)->setText("V1 PACIFIC (UNA): ");
+                } else {
+                    if((total_area_l3 )  < v3_areat * LOW_PERCENT){
+                        sprintf(buff,"V2 PACIFIC (MCB): LOW (%.2f%)",(float)((float)total_area_l3/v3_areat)*100 );
+                        ui->listWidget->item(2)->setText(QString(buff));
 
-                    //ui->est_go3->display(19);
-                    mcb_low = 1;
-                    mcb_high = 0;
-                    mcb_mod = 0;
-                }else if((total_area_l3 ) > v3_areat * LOW_PERCENT && total_area_l3 < v3_areat * MOD_PERCENT){
-                    sprintf(buff,"V2 PACIFIC (MCB): MOD (%.2f%)",(float)((float)total_area_l3/v3_areat)*100 );
-                    ui->listWidget->item(2)->setText(QString(buff));
+                        //ui->est_go3->display(19);
+                        mcb_low = 1;
+                        mcb_high = 0;
+                        mcb_mod = 0;
+                    }else if((total_area_l3 ) > v3_areat * LOW_PERCENT && total_area_l3 < v3_areat * MOD_PERCENT){
+                        sprintf(buff,"V3 PACIFIC (MCB): MOD (%.2f%)",(float)((float)total_area_l3/v3_areat)*100 );
+                        ui->listWidget->item(2)->setText(QString(buff));
 
-                    //ui->est_go3->display(19);
-                    mcb_mod = 1;
-                    mcb_low = 0;
-                    mcb_high = 0;
-                }else if((total_area_l3 ) > v3_areat * MOD_PERCENT){
-                    sprintf(buff,"V2 PACIFIC (MCB): HIGH (%.2f%)",(float)((float)total_area_l3/v3_areat)*100 );
-                    ui->listWidget->item(2)->setText(QString(buff));
+                        //ui->est_go3->display(19);
+                        mcb_mod = 1;
+                        mcb_low = 0;
+                        mcb_high = 0;
+                    }else if((total_area_l3 ) > v3_areat * MOD_PERCENT){
+                        sprintf(buff,"V3 PACIFIC (MCB): HIGH (%.2f%)",(float)((float)total_area_l3/v3_areat)*100 );
+                        ui->listWidget->item(2)->setText(QString(buff));
 
-                    mcb_high = 1;
-                    mcb_low = 0;
-                    mcb_mod = 0;
+                        mcb_high = 1;
+                        mcb_low = 0;
+                        mcb_mod = 0;
+                    }
+
+                    if((total_area_l2 ) < v2_areat * LOW_PERCENT){
+                        sprintf(buff,"V3 PACIFIC (JPR): LOW (%.2f%)",(float)((float)total_area_l2/v2_areat)*100 );
+                        ui->listWidget->item(1)->setText(QString(buff));
+
+                        jpr_low = 1;
+                        jpr_high = 0;
+                        jpr_mod = 0;
+
+                    }else if((total_area_l2 ) > v2_areat * LOW_PERCENT && total_area_l2 < v2_areat *MOD_PERCENT){
+                        sprintf(buff,"V2 PACIFIC (JPR): MOD (%.2f%)",(float)((float)total_area_l2/v2_areat)*100 );
+                        ui->listWidget->item(1)->setText(QString(buff));
+
+                        jpr_mod = 1;
+                        jpr_high = 0;
+                        jpr_low = 0;
+                    }else if((total_area_l2 ) > v2_areat * MOD_PERCENT){
+                        sprintf(buff,"V2 PACIFIC (JPR): HIGH (%.2f%)",(float)((float)total_area_l2/v2_areat)*100 );
+                        ui->listWidget->item(1)->setText(QString(buff));
+
+                        jpr_high = 1;
+                        jpr_low = 0;
+                        jpr_mod = 0;
+                    }
+
+                    if((total_area_l1 ) < v1_areat * LOW_PERCENT){
+                        sprintf(buff,"V1 PACIFIC (UNA): LOW (%.2f%)",(float)((float)total_area_l1/v1_areat)*100 );
+                        ui->listWidget->item(0)->setText(QString(buff));
+
+                        una_low = 1;
+                        una_high = 0;
+                        una_mod = 0;
+                    }else if((total_area_l1 ) > v1_areat * LOW_PERCENT && total_area_l1 < v1_areat * MOD_PERCENT){
+                        sprintf(buff,"V1 PACIFIC (UNA): MOD (%.2f%)",(float)((float)total_area_l1/v1_areat)*100 );
+                        ui->listWidget->item(0)->setText(QString(buff));
+
+                        una_mod = 1;
+                        una_high = 0;
+                        una_low = 0;
+                    }else if((total_area_l1 ) > v1_areat * MOD_PERCENT){
+                        sprintf(buff,"V1 PACIFIC (UNA): HIGH (%.2f%)",(float)((float)total_area_l1/v1_areat)*100 );
+                        ui->listWidget->item(0)->setText(QString(buff));
+                        una_low = 0;
+                        una_mod = 0;
+                        una_high = 1;
+                    }
                 }
 
-                if((total_area_l2 ) < v2_areat * LOW_PERCENT){
-                    sprintf(buff,"V2 PACIFIC (JPR): LOW (%.2f%)",(float)((float)total_area_l2/v2_areat)*100 );
-                    ui->listWidget->item(1)->setText(QString(buff));
 
-                    jpr_low = 1;
-                    jpr_high = 0;
-                    jpr_mod = 0;
-
-                }else if((total_area_l2 ) > v2_areat * LOW_PERCENT && total_area_l2 < v2_areat *MOD_PERCENT){
-                    sprintf(buff,"V2 PACIFIC (JPR): MOD (%.2f%)",(float)((float)total_area_l2/v2_areat)*100 );
-                    ui->listWidget->item(1)->setText(QString(buff));
-
-                    jpr_mod = 1;
-                    jpr_high = 0;
-                    jpr_low = 0;
-                }else if((total_area_l2 ) > v2_areat * MOD_PERCENT){
-                    sprintf(buff,"V2 PACIFIC (JPR): HIGH (%.2f%)",(float)((float)total_area_l2/v2_areat)*100 );
-                    ui->listWidget->item(1)->setText(QString(buff));
-
-                    jpr_high = 1;
-                    jpr_low = 0;
-                    jpr_mod = 0;
-                }
-
-                if((total_area_l1 ) < v1_areat * LOW_PERCENT){
-                    sprintf(buff,"V1 PACIFIC (UNA): LOW (%.2f%)",(float)((float)total_area_l1/v1_areat)*100 );
-                    ui->listWidget->item(0)->setText(QString(buff));
-
-                    una_low = 1;
-                    una_high = 0;
-                    una_mod = 0;
-                }else if((total_area_l1 ) > v1_areat * LOW_PERCENT && total_area_l1 < v1_areat * MOD_PERCENT){
-                    sprintf(buff,"V1 PACIFIC (UNA): MOD (%.2f%)",(float)((float)total_area_l1/v1_areat)*100 );
-                    ui->listWidget->item(0)->setText(QString(buff));
-
-                    una_mod = 1;
-                    una_high = 0;
-                    una_low = 0;
-                }else if((total_area_l1 ) > v1_areat * MOD_PERCENT){
-                    sprintf(buff,"V1 PACIFIC (UNA): HIGH (%.2f%)",(float)((float)total_area_l1/v1_areat)*100 );
-                    ui->listWidget->item(0)->setText(QString(buff));
-                    una_low = 0;
-                    una_mod = 0;
-                    una_high = 1;
-                }
             }
 
 }
